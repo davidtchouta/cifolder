@@ -11,9 +11,6 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 sh 'python --version'
-                sh 'python -m ensurepip --upgrade'
-                sh 'apt-get install python3-pip'
-                sh 'pip --version'
             }
         }
 
