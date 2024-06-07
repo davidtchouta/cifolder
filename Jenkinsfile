@@ -1,7 +1,11 @@
 pipeline {
     agent any
-    tools {
-        conda 'Anaconda3' // Utiliser l'installation Conda configurée
+
+    environment {
+        // Ajoutez ici le chemin vers l'installation de conda, par exemple :
+        // Pour une installation Anaconda
+        CONDA_HOME = "C:\Users\dvid\anaconda3"
+        PATH = "${CONDA_HOME}/bin:${env.PATH}"
     }
 
     stages {
@@ -13,11 +17,6 @@ pipeline {
 
         stage('Setup Conda Environment') {
             steps {
-                script {
-                    // Initialiser conda
-                    def condaHome = tool name: 'Anaconda3', type: 'Conda'
-                    env.PATH = "${condaHome}/bin:${env.PATH}"
-                }
                 sh 'conda --version'
                 sh 'conda create -n myenv python=3.9 -y'
                 sh 'echo "source activate myenv" > activate_myenv.sh'
@@ -38,3 +37,4 @@ pipeline {
         }
     }
 }
+
