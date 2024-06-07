@@ -20,15 +20,14 @@ pipeline {
                 }
                 sh 'conda --version'
                 sh 'conda create -n myenv python=3.9 -y'
-                sh 'source activate myenv'
-                sh 'conda install -y --file requirements.txt' // Installer les dépendances depuis un fichier requirements.txt
+                sh 'echo "source activate myenv" > activate_myenv.sh'
+                sh '. activate_myenv.sh && conda install -y --file requirements.txt' // Installer les dépendances depuis un fichier requirements.txt
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'source activate myenv'
-                sh 'pytest'
+                sh '. activate_myenv.sh && pytest'
             }
         }
     }
