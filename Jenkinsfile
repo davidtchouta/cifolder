@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        // Ajoutez ici le chemin vers l'installation de conda, par exemple :
+        // Pour une installation Anaconda
+        CONDA_HOME = "C:\\Users\\dvid\\anaconda3"
+        PATH = "${CONDA_HOME}/bin:${env.PATH}"
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -8,24 +15,18 @@ pipeline {
             }
         }
 
-        stage('Setup Python Environment') {
+        stage('Setup Conda Environment') {
             steps {
-                sh 'python --version'
-                sh 'python -m ensurepip --upgrade'
-                sh 'apt-get install python3-pip'
-                sh 'pip --version'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip install -r requirements.txt'
+                sh 'conda --version'
+                sh 'conda create -n myenv python=3.9 -y'
+                sh 'echo "source activate myenv" > activate_myenv.sh'
+                sh '. activate_myenv.sh && conda install -y --file requirements.txt' // Installer les dépendances depuis un fichier requirements.txt
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest'
+                sh '. activate_myenv.sh && pytest'
             }
         }
     }
@@ -36,3 +37,4 @@ pipeline {
         }
     }
 }
+
