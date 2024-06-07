@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Ajoutez ici le chemin vers l'installation de conda, par exemple :
         // Pour une installation Anaconda
-        CONDA_HOME = "C:\Users\dvid\anaconda3"
+        CONDA_HOME = "C:\\Users\\dvid\\anaconda3"
         PATH = "${CONDA_HOME}/bin:${env.PATH}"
     }
 
