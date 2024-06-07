@@ -7,10 +7,7 @@ pipeline {
     
     stages {
         stage('Build') {
-            agent { 
-                node {
-                    label 'docker-agent-python'
-                }
+            agent none
             }
             steps {
                 script {
@@ -24,11 +21,7 @@ pipeline {
         }
         
         stage('Test') {
-            agent { 
-                node {
-                    label 'docker-agent-python'
-                }
-            }
+            agent none
             steps {
                 script {
                     echo "Testing.."
@@ -42,11 +35,7 @@ pipeline {
         }
         
         stage('Deliver') {
-            agent { 
-                node {
-                    label 'docker-agent-python'
-                }
-            }
+            agent none
             steps {
                 script {
                     echo 'Deliver....'
